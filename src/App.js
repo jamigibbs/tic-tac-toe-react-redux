@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import './App.css'
 import Square from './Square'
-import { userMove, gameMessage, checkForWinner } from './store'
+import { userMove, gameMessage, checkForWinner, resetGame } from './store'
 
 class App extends Component {
 
@@ -32,6 +32,10 @@ class App extends Component {
     return turn === '' || turn === 'O' ? 'X' : 'O'
   }
 
+  resetGame = () => {
+    this.props.resetGame()
+  }
+
   render() {
     const { board, turn, message } = this.props
     const nextTurn = this.nextTurn(turn)
@@ -41,6 +45,7 @@ class App extends Component {
         <h3>Current Turn: {nextTurn}</h3>
         {message && <h2>{message}</h2>}
         </header>
+        <button onClick={this.resetGame}>Reset</button>
         <div id='board'>
           <div className='board-row'>
             <Square
@@ -103,6 +108,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     checkForWinner: (player) => {
       dispatch(checkForWinner(player))
+    },
+    resetGame: () => {
+      dispatch(resetGame())
     }
   }
 }

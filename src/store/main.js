@@ -1,6 +1,7 @@
 const USER_MOVE = 'USER_MOVE'
 const GAME_MESSAGE = 'GAME_MESSAGE'
 const CHECK_FOR_WINNER = 'CHECK_FOR_WINNER'
+const RESET_GAME = 'RESET_GAME'
 
 export const userMove = (pos) => {
   return {
@@ -20,6 +21,12 @@ export const checkForWinner = (player) => {
   return {
     type: CHECK_FOR_WINNER,
     player
+  }
+}
+
+export const resetGame = () => {
+  return {
+    type: RESET_GAME
   }
 }
 
@@ -63,6 +70,9 @@ export default function(state = defaultState, action) {
       const winner = winnerResult ? action.player : null
       const message = winner ? `The winner is ${action.player}` : state.message
       return {...state, winner, message}
+    }
+    case RESET_GAME: {
+      return defaultState
     }
     default:
       return state
