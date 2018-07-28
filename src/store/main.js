@@ -41,7 +41,8 @@ const defaultState = {
   board: [ null, null, null, null, null, null, null, null, null ],
   turn: '',
   message: '',
-  winner: null
+  winner: null,
+  moves: 0
 }
 
 export default function(state = defaultState, action) {
@@ -55,7 +56,7 @@ export default function(state = defaultState, action) {
         if (i === action.pos) val = turn
         return val
       })
-      return {...state, board, turn}
+      return {...state, board, turn, moves: state.moves + 1}
     }
     case CHECK_FOR_WINNER: {
       const winnerResult = winnerCheck(state.board, action.player)

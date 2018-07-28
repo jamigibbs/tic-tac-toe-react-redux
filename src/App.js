@@ -6,9 +6,16 @@ import { userMove, gameMessage, checkForWinner } from './store'
 
 class App extends Component {
 
-  handleSquareSelect = (index) => {
-    const { board, turn } = this.props
+  componentWillReceiveProps = (prevProps) => {
+    const { turn, moves } = this.props
+    if(prevProps.board !== this.props.board && moves >= 2){
+      const nextTurn = this.nextTurn(turn)
+      this.props.checkForWinner(nextTurn)
+    }
+  }
 
+  handleSquareSelect = (index) => {
+    const { board, moves } = this.props
     if(!board[index]){
       this.props.gameMessage('')
       this.props.userMove(index)
@@ -16,13 +23,18 @@ class App extends Component {
       this.props.gameMessage('Move already taken!')
     }
 
-    const lastTurn = turn === '' || turn === 'O' ? 'X' : 'O'
-    this.props.checkForWinner(lastTurn)
+    if(moves >= 8){
+      this.props.gameMessage('Tie game!')
+    }
+  }
+
+  nextTurn = (turn) => {
+    return turn === '' || turn === 'O' ? 'X' : 'O'
   }
 
   render() {
     const { board, turn, message } = this.props
-    const nextTurn = turn === '' || turn === 'O' ? 'X' : 'O'
+    const nextTurn = this.nextTurn(turn)
     return (
       <div className="App">
         <header className="App-header">
@@ -76,7 +88,8 @@ const mapStateToProps = (state) => {
     board: state.main.board,
     turn: state.main.turn,
     message: state.main.message,
-    winner: state.main.winner
+    winner: state.main.winner,
+    moves: state.main.moves
   }
 }
 
