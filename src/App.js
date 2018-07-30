@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   render() {
-    const { board, turn, message } = this.props
+    const { board, turn, message, winner } = this.props
     const nextTurn = this.nextTurn(turn)
     return (
       <div className="App">
@@ -48,7 +48,7 @@ class App extends Component {
         </header>
         <button onClick={this.resetGame}>Reset</button>
         <History />
-        <div id='board'>
+        <div id='board' style={winner && {pointerEvents: 'none'}}>
           <div className='board-row'>
             <Square
               handleClick={() => this.handleSquareSelect(0)}

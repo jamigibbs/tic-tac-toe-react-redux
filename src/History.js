@@ -6,6 +6,7 @@ class History extends Component {
     const { history } = this.props
     return (
       <div>
+        <h4>Game History</h4>
         { history.map((win, i) => {
           return (<li key={i}>Players: {win.player} - Moves: {win.moves}</li>)
         })}
