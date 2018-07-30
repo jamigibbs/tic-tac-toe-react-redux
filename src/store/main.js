@@ -49,7 +49,8 @@ const defaultState = {
   turn: '',
   message: '',
   winner: null,
-  moves: 0
+  moves: 0,
+  history: []
 }
 
 export default function(state = defaultState, action) {
@@ -69,10 +70,14 @@ export default function(state = defaultState, action) {
       const winnerResult = winnerCheck(state.board, action.player)
       const winner = winnerResult ? action.player : null
       const message = winner ? `The winner is ${action.player}` : state.message
+      if(winner){
+        const history = {player: winner, moves: state.moves}
+        return {...state, winner, message, history: [...state.history, history]}
+      }
       return {...state, winner, message}
     }
     case RESET_GAME: {
-      return defaultState
+      return { ...defaultState, history: state.history}
     }
     default:
       return state

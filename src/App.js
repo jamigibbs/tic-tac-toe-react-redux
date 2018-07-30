@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import './App.css'
 import Square from './Square'
+import History from './History'
 import { userMove, gameMessage, checkForWinner, resetGame } from './store'
 
 class App extends Component {
@@ -46,6 +47,7 @@ class App extends Component {
         {message && <h2>{message}</h2>}
         </header>
         <button onClick={this.resetGame}>Reset</button>
+        <History />
         <div id='board'>
           <div className='board-row'>
             <Square
